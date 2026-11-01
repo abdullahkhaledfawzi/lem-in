@@ -76,3 +76,65 @@ exists, so all 4 ants queue on it = 6 turns.
 bash run.sh        # vet + unit tests + all examples + perf
 go test ./... -v   # unit tests only
 ```
+
+---
+
+## 🎨 Visualizer
+
+Watch the colony solve itself! The [`visualizer/`](visualizer/) folder contains
+a tiny, dependency-free visualizer (plain **HTML + CSS + JS**) that renders the
+farm — rooms 🏛, tunnels 🔗, `##start` 🟢 and `##end` 🔴 — and replays the
+solution turn by turn with animated ants 🐜.
+
+### 🚀 Quick start (pipe the output straight in)
+
+```bash
+./lem-in tests/example00.txt | visualizer/serve.sh
+```
+
+`serve.sh` saves the piped output and serves the page at
+**http://localhost:8000** (it opens your browser automatically).
+Change the port with `PORT=9000 visualizer/serve.sh`.
+
+You can also let it run lem-in for you:
+
+```bash
+visualizer/serve.sh tests/example01.txt
+```
+
+### 📂 No server? No problem
+
+Just open `visualizer/index.html` in your browser and **drag & drop** any
+lem-in output file onto the page (or use the file picker).
+
+### 🎮 Controls
+
+| Button | Action |
+|:------:|--------|
+| ⏮ / ⏭ | Step one turn backward / forward |
+| ▶ / ⏸ | Auto play / pause — replays the whole solution |
+| 🐢–🐇 | Speed slider: how long each turn takes (100 ms – 2 s) |
+| ⟲ | Reset back to turn 0 |
+| 🏁 | "Arrived" counter shows how many ants reached `##end` |
+
+### 🧠 How to read it
+
+- 🟢 **Green room** = `##start`, 🔴 **red room** = `##end`.
+- 🐜 **Numbered discs** are the ants; they glide along tunnels each turn.
+- 🟡 **Amber tunnels** are the ones used during the current turn.
+- The **turn log** below the board lists the exact `L<ant>-<room>` moves of
+  the current turn — same lines lem-in prints.
+
+### 🗂 Files
+
+```
+visualizer/
+├── index.html   ← page structure (board, controls, log)
+├── style.css    ← dark theme, room/ant/tunnel styling + animation
+├── app.js       ← parsing, layout, rendering, playback (~350 commented lines)
+└── serve.sh     ← takes lem-in's output via pipe and serves the page
+```
+
+---
+
+Created by Abdullah Khaled from Egypt with ❤️

@@ -1,0 +1,189 @@
+/* ---------- theme ---------- */
+:root {
+  --bg: #0d1220;
+  --panel: #151b2e;
+  --panel-edge: #232c47;
+  --text: #e8ecf8;
+  --dim: #8b94ad;
+  --accent: #5eead4;   /* teal  - ants & highlights */
+  --start: #4ade80;    /* green - ##start room */
+  --end: #f87171;      /* red   - ##end room   */
+  --tunnel: #2e3a5c;
+  --tunnel-live: #fbbf24; /* amber - tunnels used this turn */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: var(--text);
+  background: radial-gradient(1200px 600px at 20% -10%, #1a2440 0%, var(--bg) 60%);
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 18px 28px;
+}
+
+h1 { margin: 0; font-size: 1.5rem; letter-spacing: 0.5px; }
+h1 .dim { font-weight: 400; }
+
+.dim { color: var(--dim); }
+code {
+  background: #0a0f1c;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.85em;
+}
+
+/* stat chips in the header */
+.chips { display: flex; gap: 10px; flex-wrap: wrap; }
+.chip {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+}
+.chip b { color: var(--accent); }
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 30px;
+}
+
+/* ---------- the board ---------- */
+#board {
+  position: relative;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+}
+
+#svg { display: block; width: 100%; height: auto; }
+
+#drop-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  background: rgba(13, 18, 32, 0.9);
+  padding: 20px;
+}
+#drop-hint.hidden { display: none; }
+#drop-hint.dragover { outline: 2px dashed var(--accent); outline-offset: -12px; }
+
+/* ---------- graph elements ---------- */
+.tunnel {
+  stroke: var(--tunnel);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: stroke 0.3s;
+}
+.tunnel.active { stroke: var(--tunnel-live); }
+
+.room circle {
+  fill: #1e2743;
+  stroke: #3b4a75;
+  stroke-width: 3;
+  transition: fill 0.3s, stroke 0.3s;
+}
+.room text {
+  fill: var(--dim);
+  font-size: 17px;
+  text-anchor: middle;
+  pointer-events: none;
+  user-select: none;
+}
+.room:hover circle { stroke: var(--accent); }
+
+.room.start circle { stroke: var(--start); fill: #14301f; }
+.room.start text   { fill: var(--start); }
+.room.end circle   { stroke: var(--end); fill: #33151c; }
+.room.end text     { fill: var(--end); }
+.room.crowded circle { fill: #2b3a63; } /* rooms with ants on them */
+
+/* ---------- ants ---------- */
+.ant {
+  /* position is set from JS as translate(x y); transition animates the walk */
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ant circle {
+  fill: url(#ant-gradient);
+  stroke: #0d1220;
+  stroke-width: 2;
+}
+.ant text {
+  fill: #06281f;
+  font-size: 14px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ---------- controls ---------- */
+#controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-top: 16px;
+}
+
+#controls button {
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--panel-edge);
+  background: #1c2440;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.1s, border-color 0.2s;
+}
+#controls button:hover:not(:disabled) { border-color: var(--accent); }
+#controls button:active:not(:disabled) { transform: scale(0.92); }
+#controls button:disabled { opacity: 0.35; cursor: default; }
+#btn-play { min-width: 52px; }
+
+#turn-label { margin-left: auto; color: var(--dim); }
+#turn-label b { color: var(--text); }
+
+#speed-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--dim);
+}
+#speed { accent-color: var(--accent); width: 130px; }
+
+/* ---------- turn log ---------- */
+#log {
+  background: var(--panel);
+  border: 1px solid var(--panel-edge);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-top: 14px;
+}
+#log h2 { margin: 0 0 6px; font-size: 1rem; color: var(--accent); }
+#log p { margin: 4px 0; font-size: 0.95rem; }
+#log-moves { font-family: "Cascadia Code", Consolas, monospace; }

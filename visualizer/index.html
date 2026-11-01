@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐜 lem-in visualizer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🐜 lem-in <span class="dim">visualizer</span></h1>
+    <!-- quick stats about the colony, filled in by app.js -->
+    <div id="stats" class="chips">
+      <span class="chip">🐜 <b id="stat-ants">–</b> ants</span>
+      <span class="chip">🏛 <b id="stat-rooms">–</b> rooms</span>
+      <span class="chip">🔗 <b id="stat-tunnels">–</b> tunnels</span>
+      <span class="chip">🔄 <b id="stat-turns">–</b> turns</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- the colony graph is drawn here as SVG -->
+    <div id="board">
+      <svg id="svg" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet"></svg>
+      <!-- shown when there is nothing to display yet -->
+      <div id="drop-hint">
+        <p>No solution loaded.</p>
+        <p class="dim">Pipe one in:<br><code>./lem-in tests/example00.txt | visualizer/serve.sh</code></p>
+        <p class="dim">…or drop a lem-in output file here.</p>
+        <input type="file" id="file-input" accept=".txt,text/plain" />
+      </div>
+    </div>
+
+    <!-- playback controls -->
+    <div id="controls">
+      <button id="btn-reset" title="Back to turn 0">⟲</button>
+      <button id="btn-prev" title="Previous turn">⏮</button>
+      <button id="btn-play" title="Auto play / pause">▶</button>
+      <button id="btn-next" title="Next turn">⏭</button>
+      <div id="turn-label">turn <b id="turn-now">0</b> / <b id="turn-total">0</b></div>
+      <label id="speed-box" title="Seconds per turn">
+        🐢 <input type="range" id="speed" min="100" max="2000" step="50" value="700" /> 🐇
+      </label>
+    </div>
+
+    <!-- moves of the current turn -->
+    <div id="log">
+      <h2 id="log-title">Turn 0</h2>
+      <p id="log-moves" class="dim">Press ▶ or ⏭ to start the simulation.</p>
+      <p id="log-arrived">🏁 arrived: <b id="arrived">0</b> / <b id="arrived-total">0</b></p>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
