@@ -1,5 +1,9 @@
 # lem-in
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![Go](https://img.shields.io/badge/Go-00ADD8?logo=go&logoColor=white)
+![Vanilla JS](https://img.shields.io/badge/Visualizer-Vanilla%20JS-F7DF1E?logo=javascript&logoColor=black)
+
 A Go program that moves ants across a colony from `##start` to `##end`
 in the fewest turns. Standard library only.
 
@@ -136,5 +140,9 @@ visualizer/
 ```
 
 ---
+
+## 📄 License
+
+Released under the [MIT License](LICENSE) — free to use, study, modify and share.
 
 Created by Abdullah Khaled from Egypt with ❤️
