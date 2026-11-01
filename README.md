@@ -117,7 +117,7 @@ lem-in output file onto the page (or use the file picker).
 |:------:|--------|
 | ⏮ / ⏭ | Step one turn backward / forward |
 | ▶ / ⏸ | Auto play / pause — replays the whole solution |
-| 🐢–🐇 | Speed slider: how long each turn takes (100 ms – 2 s) |
+| 🐢–🐇 | Speed slider: from slow (2 s per turn) to fast (0.1 s per turn) |
 | ⟲ | Reset back to turn 0 |
 | 🏁 | "Arrived" counter shows how many ants reached `##end` |
 

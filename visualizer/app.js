@@ -262,7 +262,9 @@ function step(delta) {
 let playTimer = null;
 
 function msPerTurn() {
-  return parseInt(document.getElementById("speed").value, 10);
+  // The slider reads 100 (left) .. 2000 (right). Right should be FAST, so
+  // invert it into a delay: left = 2000 ms/turn (slow 🐢), right = 100 ms/turn (fast 🐇).
+  return 2100 - parseInt(document.getElementById("speed").value, 10);
 }
 
 function play() {
